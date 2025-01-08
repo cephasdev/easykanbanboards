@@ -1,8 +1,10 @@
+import { CardStatus } from '../CardStatus';
+
 interface ICard {
   id: string;
   title: string;
   description: string;
-  status: string;
+  status: CardStatus;
   createdBy: string;
   assignedTo: string;
   createdAt: string;
