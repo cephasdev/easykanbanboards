@@ -22,13 +22,13 @@ const cardsDone: ICard[] = [];
 const Board = () => {
   return (
     <StyledBoard>
-      <KanbanLane>
+      <KanbanLane title="To Do">
         {cardsToDo.map((card) => (
           <Card title={card.title}></Card>
         ))}
       </KanbanLane>
-      <KanbanLane>In Progress</KanbanLane>
-      <KanbanLane>Done</KanbanLane>
+      <KanbanLane title="In Progress"></KanbanLane>
+      <KanbanLane title="Done"></KanbanLane>
     </StyledBoard>
   );
 };

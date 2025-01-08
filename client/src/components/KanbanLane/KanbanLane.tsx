@@ -1,7 +1,17 @@
-import StyledKanbanLane from './KanbanLane.styles';
+import { StyledKanbanLane, StyledKanbanLaneHeader } from './KanbanLane.styles';
 
-const KanbanLane = ({ children }: { children: React.ReactNode }) => {
-  return <StyledKanbanLane>{children}</StyledKanbanLane>;
+interface IKanbanLaneProps {
+  children?: React.ReactNode;
+  title: string;
+}
+
+const KanbanLane = ({ children, title }: IKanbanLaneProps) => {
+  return (
+    <StyledKanbanLane>
+      <StyledKanbanLaneHeader>{title}</StyledKanbanLaneHeader>
+      {children}
+    </StyledKanbanLane>
+  );
 };
 
 export default KanbanLane;
