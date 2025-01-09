@@ -1,3 +1,5 @@
+import { StyledCard } from './Card.styles';
+
 interface ICardProps {
   title: string;
   // TODO: add other required props.
@@ -5,9 +7,9 @@ interface ICardProps {
 
 const Card = ({ title }: ICardProps) => {
   return (
-    <div>
+    <StyledCard>
       <h3>{title}</h3>
-    </div>
+    </StyledCard>
   );
 };
 

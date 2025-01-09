@@ -1,4 +1,4 @@
-import { CardStatus } from '../CardStatus';
+import { CardStatus } from '../enumerations/CardStatus';
 
 interface ICard {
   id: string;
