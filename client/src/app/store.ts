@@ -2,10 +2,12 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 import cardsSlice from '../features/cards/cards-slice';
+import usersSlice from '../features/cards/users-slice';
 
 export const store = configureStore({
   reducer: {
     cards: cardsSlice,
+    users: usersSlice,
   },
 });
 
