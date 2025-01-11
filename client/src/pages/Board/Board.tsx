@@ -99,6 +99,9 @@ const Board = () => {
         <KanbanLane
           title="To Do"
           type={KanbanLaneTypes.toDo}
+          numberOfCards={
+            cards.filter((card) => card.status === CardStatus.TODO).length
+          }
           onCardAdded={onNewCardClicked}
         >
           {cards
@@ -117,6 +120,10 @@ const Board = () => {
         <KanbanLane
           title="In Progress"
           type={KanbanLaneTypes.inProgress}
+          numberOfCards={
+            cards.filter((card) => card.status === CardStatus.IN_PROGRESS)
+              .length
+          }
           onCardAdded={onNewCardClicked}
         >
           {cards
@@ -135,6 +142,9 @@ const Board = () => {
         <KanbanLane
           title="Done"
           type={KanbanLaneTypes.done}
+          numberOfCards={
+            cards.filter((card) => card.status === CardStatus.DONE).length
+          }
           onCardAdded={onNewCardClicked}
         >
           {cards

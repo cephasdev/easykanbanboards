@@ -11,6 +11,7 @@ interface IKanbanLaneProps {
   children?: React.ReactNode;
   title: string;
   type: KanbanLaneTypes;
+  numberOfCards?: number;
   onCardAdded: (type: KanbanLaneTypes) => void;
 }
 
@@ -18,12 +19,14 @@ const KanbanLane = ({
   children,
   title,
   type,
+  numberOfCards,
   onCardAdded,
 }: IKanbanLaneProps) => {
   return (
     <StyledKanbanLane variant={type}>
       <StyledKanbanLaneHeader>
         <StyledKanbanLaneTitle>{title}</StyledKanbanLaneTitle>
+        {numberOfCards && <div>{`(${numberOfCards})`}</div>}
         <StyledKanbanLaneHeaderActionButton onClick={() => onCardAdded(type)} />
       </StyledKanbanLaneHeader>
       <StyledKanbanLaneCardsHolder>{children}</StyledKanbanLaneCardsHolder>
