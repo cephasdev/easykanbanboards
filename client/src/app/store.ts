@@ -2,7 +2,7 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 import cardsSlice from '../features/cards/cards-slice';
-import usersSlice from '../features/cards/users-slice';
+import usersSlice from '../features/users/users-slice';
 
 export const store = configureStore({
   reducer: {
