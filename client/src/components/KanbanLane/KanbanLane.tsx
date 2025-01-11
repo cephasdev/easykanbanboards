@@ -3,6 +3,7 @@ import {
   StyledKanbanLane,
   StyledKanbanLaneCardsHolder,
   StyledKanbanLaneHeader,
+  StyledKanbanLaneHeaderActionButton,
 } from './KanbanLane.styles';
 
 interface IKanbanLaneProps {
@@ -14,7 +15,10 @@ interface IKanbanLaneProps {
 const KanbanLane = ({ children, title, type }: IKanbanLaneProps) => {
   return (
     <StyledKanbanLane variant={type}>
-      <StyledKanbanLaneHeader>{title}</StyledKanbanLaneHeader>
+      <StyledKanbanLaneHeader>
+        {title}
+        <StyledKanbanLaneHeaderActionButton />
+      </StyledKanbanLaneHeader>
       <StyledKanbanLaneCardsHolder>{children}</StyledKanbanLaneCardsHolder>
     </StyledKanbanLane>
   );

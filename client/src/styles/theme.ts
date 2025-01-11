@@ -10,6 +10,7 @@ export const theme = {
     info: '#17a2b8',
     light: '#f8f9fa',
     dark: '#343a40',
+    textOnDark: '#f8f9fa',
     kanbanTypes: {
       toDo: {
         header: '#1A92DB',

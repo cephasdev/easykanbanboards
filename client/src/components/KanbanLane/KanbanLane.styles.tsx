@@ -1,6 +1,7 @@
 import { css, styled } from 'styled-components';
 import KanbanLaneTypes from '../../entities/enumerations/KanbanLaneTypes';
 import { StyledCard } from '../Card/Card.styles';
+import { AddCircleOutline } from 'styled-icons/material';
 
 // https://www.npmjs.com/package/styled-icons
 // https://styled-icons.dev/
@@ -62,11 +63,12 @@ const StyledKanbanLane = styled.div<IKanbanLaneProps>`
 `;
 
 const StyledKanbanLaneHeader = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 1rem;
-  color: #fff;
+  color: ${({ theme }) => theme.colors.textOnDark};
 `;
 
 const StyledKanbanLaneCardsHolder = styled.div`
@@ -77,8 +79,24 @@ const StyledKanbanLaneCardsHolder = styled.div`
   color: #fff;
 `;
 
+const StyledKanbanLaneHeaderActionButton = styled(AddCircleOutline)`
+  position: absolute;
+  top: calc(50% - 1.2rem);
+  right: 0.5rem;
+  height: 2.4rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.3s ease-in-out;
+  &:hover {
+    opacity: 1;
+  }
+`;
+
 export {
   StyledKanbanLane,
   StyledKanbanLaneHeader,
   StyledKanbanLaneCardsHolder,
+  StyledKanbanLaneHeaderActionButton,
 };
