@@ -1,7 +1,30 @@
 import { styled } from 'styled-components';
+import { Close } from 'styled-icons/material';
 
-export const StyledCard = styled.div`
+const StyledCard = styled.div`
+  position: relative;
   border: 1px solid #ccc;
   border-radius: 4px;
-  padding: 1rem;
+  padding: 1.5rem 1rem;
+  color: ${({ theme }) => theme.colors.textOnDark};
+  &:hover .close-card {
+    visibility: visible;
+  }
 `;
+
+const StyledCloseButton = styled(Close)`
+  position: absolute;
+  top: 0rem;
+  right: 0rem;
+  height: 1.5rem;
+  cursor: pointer;
+  padding: 0.2rem;
+  border-radius: 50%;
+  visibility: hidden;
+  transition: background-color 0.3s ease;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+`;
+
+export { StyledCard, StyledCloseButton };

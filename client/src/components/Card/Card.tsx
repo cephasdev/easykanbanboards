@@ -1,12 +1,13 @@
-import { StyledCard } from './Card.styles';
+import { StyledCard, StyledCloseButton } from './Card.styles';
 
 interface ICardProps {
   title: string;
   onDoubleClick: () => void;
+  onCardCloseClicked: () => void;
   // TODO: add other required props.
 }
 
-const Card = ({ title, onDoubleClick }: ICardProps) => {
+const Card = ({ title, onDoubleClick, onCardCloseClicked }: ICardProps) => {
   return (
     <StyledCard
       onDoubleClick={() => {
@@ -14,6 +15,11 @@ const Card = ({ title, onDoubleClick }: ICardProps) => {
         onDoubleClick();
       }}
     >
+      <StyledCloseButton
+        aria-label="close card"
+        className="close-card"
+        onClick={onCardCloseClicked}
+      />
       <h3>{title}</h3>
     </StyledCard>
   );

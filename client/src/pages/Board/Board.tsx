@@ -8,7 +8,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import Modal from '../../components/Modal/Modal';
 import { useEffect, useState } from 'react';
 import CardForm from '../../components/Form/CardForm';
-import { addCard, updateCard } from '../../features/cards/cards-slice';
+import {
+  addCard,
+  removeCard,
+  updateCard,
+} from '../../features/cards/cards-slice';
 
 const Board = () => {
   const [isCardOpenForEditing, setIsCardOpenForEditing] =
@@ -84,6 +88,11 @@ const Board = () => {
     setIsCardOpenForEditing(true);
   };
 
+  const onCardDelete = (id: string) => {
+    console.log('Delete card', id);
+    dispatch(removeCard(id));
+  };
+
   return (
     <>
       <StyledBoard>
@@ -101,6 +110,7 @@ const Board = () => {
                 onDoubleClick={() => {
                   openCardForEditing(card.id);
                 }}
+                onCardCloseClicked={() => onCardDelete(card.id)}
               ></Card>
             ))}
         </KanbanLane>
@@ -118,6 +128,7 @@ const Board = () => {
                 onDoubleClick={() => {
                   openCardForEditing(card.id);
                 }}
+                onCardCloseClicked={() => onCardDelete(card.id)}
               ></Card>
             ))}
         </KanbanLane>
@@ -135,6 +146,7 @@ const Board = () => {
                 onDoubleClick={() => {
                   openCardForEditing(card.id);
                 }}
+                onCardCloseClicked={() => onCardDelete(card.id)}
               ></Card>
             ))}
         </KanbanLane>
