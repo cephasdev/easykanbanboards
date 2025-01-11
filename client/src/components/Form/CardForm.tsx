@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import {
   StyledGhostButton,
   StyledPrimaryButton,
@@ -32,10 +33,21 @@ const CardForm = ({ initialValues, onClose }: ICardFormProps) => {
     initialValues,
     validateCardForm,
   );
+  const firstInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    firstInputRef.current?.focus();
+  }, []);
 
   const onSubmit = () => {
     console.log('Form submitted');
     onClose();
+  };
+
+  const handleKeyDown = (ev: React.KeyboardEvent<HTMLInputElement>) => {
+    if (ev.key === 'Escape') {
+      onClose();
+    }
   };
 
   return (
@@ -47,8 +59,11 @@ const CardForm = ({ initialValues, onClose }: ICardFormProps) => {
         type="text"
         value={values.cardTitle}
         onChange={handleChange}
+        ref={firstInputRef}
+        onKeyDown={handleKeyDown}
         aria-invalid={!!errors.cardTitle}
         aria-describedby="title-error"
+        required
       />
       {errors.cardTitle && (
         <StyledErrorText id="title-error">{errors.cardTitle}</StyledErrorText>
