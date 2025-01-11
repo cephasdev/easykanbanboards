@@ -12,7 +12,9 @@ import {
   addCard,
   removeCard,
   updateCard,
+  updateCardStatus,
 } from '../../features/cards/cards-slice';
+import { DndContext, DragEndEvent } from '@dnd-kit/core';
 
 const Board = () => {
   const [isCardOpenForEditing, setIsCardOpenForEditing] =
@@ -93,8 +95,33 @@ const Board = () => {
     dispatch(removeCard(id));
   };
 
+  const onDragEnd = (ev: DragEndEvent) => {
+    const { active, over } = ev;
+
+    if (!active || !over) {
+      return;
+    }
+
+    const draggedCardId = active.id as string;
+    const targetLaneType = over.id as KanbanLaneTypes;
+
+    let newCardStatus = CardStatus.TODO;
+    if (targetLaneType === KanbanLaneTypes.inProgress) {
+      newCardStatus = CardStatus.IN_PROGRESS;
+    } else if (targetLaneType === KanbanLaneTypes.done) {
+      newCardStatus = CardStatus.DONE;
+    }
+
+    dispatch(
+      updateCardStatus({
+        id: draggedCardId,
+        status: newCardStatus,
+      }),
+    );
+  };
+
   return (
-    <>
+    <DndContext onDragEnd={onDragEnd}>
       <StyledBoard>
         <KanbanLane
           title="To Do"
@@ -109,6 +136,7 @@ const Board = () => {
             .map((card) => (
               <Card
                 title={card.title}
+                cardId={card.id}
                 key={card.id}
                 onDoubleClick={() => {
                   openCardForEditing(card.id);
@@ -132,6 +160,7 @@ const Board = () => {
               <Card
                 title={card.title}
                 key={card.id}
+                cardId={card.id}
                 onDoubleClick={() => {
                   openCardForEditing(card.id);
                 }}
@@ -153,6 +182,7 @@ const Board = () => {
               <Card
                 title={card.title}
                 key={card.id}
+                cardId={card.id}
                 onDoubleClick={() => {
                   openCardForEditing(card.id);
                 }}
@@ -176,7 +206,7 @@ const Board = () => {
           }}
         />
       </Modal>
-    </>
+    </DndContext>
   );
 };
 

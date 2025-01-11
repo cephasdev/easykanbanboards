@@ -23,6 +23,7 @@ const StyledCard = styled.div`
   padding: 1.5rem 1rem;
   margin-bottom: ${({ theme }) => theme.spacing(2)};
   color: ${({ theme }) => theme.colors.textOnDark};
+  cursor: grab;
   &:hover ${StyledCloseButton} {
     visibility: visible;
   }

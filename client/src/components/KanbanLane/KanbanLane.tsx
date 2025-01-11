@@ -1,3 +1,4 @@
+import { useDroppable } from '@dnd-kit/core';
 import KanbanLaneTypes from '../../entities/enumerations/KanbanLaneTypes';
 import {
   StyledKanbanLane,
@@ -24,6 +25,10 @@ const KanbanLane = ({
 }: IKanbanLaneProps) => {
   // TODO: To prevent unnecessray rerenders, fetch the tasks directly from the global store, instead of receiving them as props.
 
+  const { setNodeRef } = useDroppable({
+    id: type,
+  });
+
   return (
     <StyledKanbanLane variant={type}>
       <StyledKanbanLaneHeader>
@@ -31,7 +36,9 @@ const KanbanLane = ({
         {numberOfCards && <div>{`(${numberOfCards})`}</div>}
         <StyledKanbanLaneHeaderActionButton onClick={() => onCardAdded(type)} />
       </StyledKanbanLaneHeader>
-      <StyledKanbanLaneCardsHolder>{children}</StyledKanbanLaneCardsHolder>
+      <StyledKanbanLaneCardsHolder ref={setNodeRef}>
+        {children}
+      </StyledKanbanLaneCardsHolder>
     </StyledKanbanLane>
   );
 };
