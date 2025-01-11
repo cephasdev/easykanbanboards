@@ -16,7 +16,7 @@ const GlobalStyles = createGlobalStyle`
 
   body {
     margin: 0 auto;
-    padding: 1rem;
+    padding: 0 1rem;
     max-width: 1200px;
     font-family: 'Roboto', sans-serif;
     background-color: ${({ theme }) => theme.colors.background};
@@ -33,10 +33,6 @@ const GlobalStyles = createGlobalStyle`
     &:hover {
       text-decoration: underline;
     }
-  }
-
-  h1 {
-    margin-bottom: ${({ theme }) => theme.spacing(8)};
   }
 `;
 

@@ -5,7 +5,7 @@ const StyledFormWrapper = styled.form`
   flex-direction: column;
   gap: 1rem;
   padding: 1rem;
-  border-radius: 0.5rem;
+  border-radius: ${({ theme }) => theme.spacing(2)};
   background-color: ${({ theme }) => theme.colors.background};
   max-width: 50rem;
 `;
@@ -13,12 +13,12 @@ const StyledFormWrapper = styled.form`
 const StyledLabel = styled.label`
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: ${({ theme }) => theme.spacing(2)};
 `;
 
 const StyledInput = styled.input`
-  padding: 0.5rem;
-  border-radius: 0.5rem;
+  padding: ${({ theme }) => theme.spacing(2)};
+  border-radius: ${({ theme }) => theme.spacing(2)};
   border: 1px solid ${({ theme }) => theme.colors.primary};
 `;
 

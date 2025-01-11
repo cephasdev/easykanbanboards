@@ -14,7 +14,7 @@ const StyledKanbanLane = styled.div<IKanbanLaneProps>`
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 0.5rem;
+  gap: ${({ theme }) => theme.spacing(2)};
   ${({ variant, theme }) => {
     switch (variant) {
       case KanbanLaneTypes.toDo:
@@ -86,8 +86,8 @@ const StyledKanbanLaneCardsHolder = styled.div`
 const StyledKanbanLaneHeaderActionButton = styled(AddCircleOutline)`
   position: absolute;
   top: calc(50% - 1rem);
-  right: 0.5rem;
-  height: 2rem;
+  right: ${({ theme }) => theme.spacing(2)};
+  height: ${({ theme }) => theme.spacing(8)};
   background-color: transparent;
   border: none;
   cursor: pointer;

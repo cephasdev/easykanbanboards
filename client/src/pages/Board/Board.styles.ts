@@ -4,7 +4,7 @@ const StyledBoard = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: stretch;
-  gap: 0.5rem;
+  gap: ${({ theme }) => theme.spacing(2)};
   flex: 1;
 `;
 

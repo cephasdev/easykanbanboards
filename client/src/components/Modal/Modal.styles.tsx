@@ -27,7 +27,7 @@ const StyledModalContainer = styled.div`
   z-index: 101;
   background-color: #fff;
   padding: 1rem;
-  border-radius: 0.5rem;
+  border-radius: ${({ theme }) => theme.spacing(2)};
   animation: ${fadeIn} 0.3s ease-in-out;
 `;
 
