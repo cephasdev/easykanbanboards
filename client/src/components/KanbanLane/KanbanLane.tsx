@@ -22,6 +22,8 @@ const KanbanLane = ({
   numberOfCards,
   onCardAdded,
 }: IKanbanLaneProps) => {
+  // TODO: To prevent unnecessray rerenders, fetch the tasks directly from the global store, instead of receiving them as props.
+
   return (
     <StyledKanbanLane variant={type}>
       <StyledKanbanLaneHeader>
