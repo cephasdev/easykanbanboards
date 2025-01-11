@@ -2,12 +2,18 @@ import { StyledCard } from './Card.styles';
 
 interface ICardProps {
   title: string;
+  onDoubleClick: () => void;
   // TODO: add other required props.
 }
 
-const Card = ({ title }: ICardProps) => {
+const Card = ({ title, onDoubleClick }: ICardProps) => {
   return (
-    <StyledCard>
+    <StyledCard
+      onDoubleClick={() => {
+        console.log('Card double clicked');
+        onDoubleClick();
+      }}
+    >
       <h3>{title}</h3>
     </StyledCard>
   );

@@ -6,17 +6,29 @@ import StyledBoard from './Board.styles';
 import { AppDispatch, RootState } from '../../app/store';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from '../../components/Modal/Modal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CardForm from '../../components/Form/CardForm';
-import { addCard } from '../../features/cards/cards-slice';
+import { addCard, updateCard } from '../../features/cards/cards-slice';
 
 const Board = () => {
   const [isCardOpenForEditing, setIsCardOpenForEditing] =
     useState<boolean>(false);
   const [typeOfCardOpenedForEditing, setTypeOfCardOpenedForEditing] =
     useState<KanbanLaneTypes>(KanbanLaneTypes.toDo);
+  const [idOfCardOpenedForEditing, setIdOfCardOpenedForEditing] =
+    useState<string>('');
+  const [editFormInitialValues, setEditFormInitialValues] = useState<
+    Record<string, string>
+  >({ cardTitle: '' });
   const cards = useSelector((state: RootState) => state.cards.cards);
   const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    if (!isCardOpenForEditing) {
+      setIdOfCardOpenedForEditing('');
+      setEditFormInitialValues({ cardTitle: '' });
+    }
+  }, [isCardOpenForEditing]);
 
   const onNewCardClicked = (type: KanbanLaneTypes) => {
     setTypeOfCardOpenedForEditing(type);
@@ -32,19 +44,44 @@ const Board = () => {
       newCardStatus = CardStatus.DONE;
     }
 
-    dispatch(
-      addCard({
-        id: '5',
-        title: values.cardTitle,
-        description: '',
-        status: newCardStatus,
-        createdBy: '1',
-        assignedTo: '1',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      }),
-    );
+    if (idOfCardOpenedForEditing) {
+      console.log('Editing card: ', idOfCardOpenedForEditing);
+      dispatch(
+        updateCard({
+          id: idOfCardOpenedForEditing,
+          title: values.cardTitle,
+          description: '',
+          status: newCardStatus,
+          createdBy: '1',
+          assignedTo: '1',
+          createdAt: new Date().toISOString(), // TODO: keep the original date
+          updatedAt: new Date().toISOString(),
+        }),
+      );
+    } else {
+      dispatch(
+        addCard({
+          id: Math.round(Math.random() * 100).toString(),
+          title: values.cardTitle,
+          description: '',
+          status: newCardStatus,
+          createdBy: '1',
+          assignedTo: '1',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        }),
+      );
+    }
     setIsCardOpenForEditing(false);
+  };
+
+  const openCardForEditing = (id: string) => {
+    setEditFormInitialValues({
+      cardTitle: cards.find((card) => card.id === id)?.title || '',
+    });
+    console.log('Open card for editing, id: ', id);
+    setIdOfCardOpenedForEditing(id);
+    setIsCardOpenForEditing(true);
   };
 
   return (
@@ -58,7 +95,13 @@ const Board = () => {
           {cards
             .filter((card) => card.status === CardStatus.TODO)
             .map((card) => (
-              <Card title={card.title} key={card.id}></Card>
+              <Card
+                title={card.title}
+                key={card.id}
+                onDoubleClick={() => {
+                  openCardForEditing(card.id);
+                }}
+              ></Card>
             ))}
         </KanbanLane>
         <KanbanLane
@@ -69,7 +112,13 @@ const Board = () => {
           {cards
             .filter((card) => card.status === CardStatus.IN_PROGRESS)
             .map((card) => (
-              <Card title={card.title} key={card.id}></Card>
+              <Card
+                title={card.title}
+                key={card.id}
+                onDoubleClick={() => {
+                  openCardForEditing(card.id);
+                }}
+              ></Card>
             ))}
         </KanbanLane>
         <KanbanLane
@@ -80,7 +129,13 @@ const Board = () => {
           {cards
             .filter((card) => card.status === CardStatus.DONE)
             .map((card) => (
-              <Card title={card.title} key={card.id}></Card>
+              <Card
+                title={card.title}
+                key={card.id}
+                onDoubleClick={() => {
+                  openCardForEditing(card.id);
+                }}
+              ></Card>
             ))}
         </KanbanLane>
       </StyledBoard>
@@ -91,9 +146,12 @@ const Board = () => {
       >
         <h1>Modal Content</h1>
         <CardForm
-          initialValues={{ cardTitle: '' }}
+          initialValues={editFormInitialValues}
           onSubmit={onSubmit}
-          onClose={() => setIsCardOpenForEditing(false)}
+          onClose={() => {
+            setIsCardOpenForEditing(false);
+            setEditFormInitialValues({ cardTitle: '' });
+          }}
         />
       </Modal>
     </>

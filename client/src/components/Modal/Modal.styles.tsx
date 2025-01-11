@@ -5,7 +5,9 @@ interface IOverlayProps {
   isOpen: boolean;
 }
 
-const StyledOverlay = styled.div<IOverlayProps>`
+const StyledOverlay = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['isOpen'].includes(prop),
+})<IOverlayProps>`
   display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
   position: fixed;
   top: 0;

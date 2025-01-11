@@ -62,6 +62,18 @@ const cardsSlice = createSlice({
     removeCard(state, action: PayloadAction<string>) {
       state.cards = state.cards.filter((card) => card.id !== action.payload);
     },
+    updateCard(state, action: PayloadAction<ICard>) {
+      state.cards = state.cards.map((card) => {
+        if (card.id !== action.payload.id) {
+          return card;
+        }
+
+        return {
+          ...card,
+          ...action.payload,
+        };
+      });
+    },
     updateCardStatus(
       state,
       action: PayloadAction<{ id: string; status: CardStatus }>,
@@ -78,6 +90,7 @@ const cardsSlice = createSlice({
   },
 });
 
-export const { addCard, removeCard, updateCardStatus } = cardsSlice.actions;
+export const { addCard, removeCard, updateCard, updateCardStatus } =
+  cardsSlice.actions;
 
 export default cardsSlice.reducer;
