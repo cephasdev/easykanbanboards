@@ -13,6 +13,7 @@ import useForm from './useForm';
 
 interface ICardFormProps {
   initialValues: Record<string, string>;
+  onSubmit: (values: Record<string, string>) => void;
   onClose: () => void;
 }
 
@@ -28,7 +29,7 @@ const validateCardForm = (values: Record<string, string>) => {
   return errors;
 };
 
-const CardForm = ({ initialValues, onClose }: ICardFormProps) => {
+const CardForm = ({ initialValues, onSubmit, onClose }: ICardFormProps) => {
   const { values, errors, handleChange, handleSubmit, isSubmitted } = useForm(
     initialValues,
     validateCardForm,
@@ -39,11 +40,6 @@ const CardForm = ({ initialValues, onClose }: ICardFormProps) => {
     firstInputRef.current?.focus();
   }, []);
 
-  const onSubmit = () => {
-    console.log('Form submitted');
-    onClose();
-  };
-
   const handleKeyDown = (ev: React.KeyboardEvent<HTMLInputElement>) => {
     if (ev.key === 'Escape') {
       onClose();
@@ -51,7 +47,7 @@ const CardForm = ({ initialValues, onClose }: ICardFormProps) => {
   };
 
   return (
-    <StyledFormWrapper onSubmit={handleSubmit(onSubmit)}>
+    <StyledFormWrapper onSubmit={handleSubmit(() => onSubmit(values))}>
       <StyledLabel htmlFor="cardTitle">Title</StyledLabel>
       <StyledInput
         id="cardTitle"

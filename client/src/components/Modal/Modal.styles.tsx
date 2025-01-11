@@ -20,6 +20,7 @@ const StyledModalContainer = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
+  width: 25rem;
   transform: translate(-50%, -50%);
   z-index: 101;
   background-color: #fff;
