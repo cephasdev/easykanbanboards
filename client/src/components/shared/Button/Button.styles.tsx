@@ -9,14 +9,16 @@ const StyledGhostButton = styled.button`
   ${buttonStyles}
 
   background-color: transparent;
+  color: ${({ theme }) => theme.colors.primary};
+  border-color: ${({ theme }) => theme.colors.primary};
 `;
 
 const StyledDangerButton = styled.button`
   ${buttonStyles}
 
   background-color: transparent;
-  color: red;
-  border-color: red;
+  color: ${({ theme }) => theme.colors.error};
+  border-color: ${({ theme }) => theme.colors.error};
 `;
 
 export { StyledPrimaryButton, StyledGhostButton, StyledDangerButton };

@@ -6,7 +6,8 @@ import StyledBoard from './Board.styles';
 import { RootState } from '../../app/store';
 import { useSelector } from 'react-redux';
 import Modal from '../../components/Modal/Modal';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import CardForm from '../../components/Form/CardForm';
 
 const Board = () => {
   const cards = useSelector((state: RootState) => state.cards.cards);
@@ -28,7 +29,7 @@ const Board = () => {
           {cards
             .filter((card) => card.status === CardStatus.TODO)
             .map((card) => (
-              <Card title={card.title}></Card>
+              <Card title={card.title} key={card.id}></Card>
             ))}
         </KanbanLane>
         <KanbanLane
@@ -39,7 +40,7 @@ const Board = () => {
           {cards
             .filter((card) => card.status === CardStatus.IN_PROGRESS)
             .map((card) => (
-              <Card title={card.title}></Card>
+              <Card title={card.title} key={card.id}></Card>
             ))}
         </KanbanLane>
         <KanbanLane
@@ -50,7 +51,7 @@ const Board = () => {
           {cards
             .filter((card) => card.status === CardStatus.DONE)
             .map((card) => (
-              <Card title={card.title}></Card>
+              <Card title={card.title} key={card.id}></Card>
             ))}
         </KanbanLane>
       </StyledBoard>
@@ -60,6 +61,10 @@ const Board = () => {
         onClose={() => setIsCardOpenForEditing(false)}
       >
         <h1>Modal Content</h1>
+        <CardForm
+          initialValues={{ cardTitle: '' }}
+          onClose={() => setIsCardOpenForEditing(false)}
+        />
       </Modal>
     </>
   );
