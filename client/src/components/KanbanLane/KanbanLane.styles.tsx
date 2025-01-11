@@ -14,7 +14,7 @@ const StyledKanbanLane = styled.div<IKanbanLaneProps>`
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 1rem;
+  gap: 0.5rem;
   ${({ variant, theme }) => {
     switch (variant) {
       case KanbanLaneTypes.toDo:
@@ -71,19 +71,23 @@ const StyledKanbanLaneHeader = styled.div`
   color: ${({ theme }) => theme.colors.textOnDark};
 `;
 
+const StyledKanbanLaneTitle = styled.h2`
+  margin: 0;
+`;
+
 const StyledKanbanLaneCardsHolder = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
   padding: 1rem;
   color: #fff;
+  flex: 1;
 `;
 
 const StyledKanbanLaneHeaderActionButton = styled(AddCircleOutline)`
   position: absolute;
-  top: calc(50% - 1.2rem);
+  top: calc(50% - 1rem);
   right: 0.5rem;
-  height: 2.4rem;
+  height: 2rem;
   background-color: transparent;
   border: none;
   cursor: pointer;
@@ -97,6 +101,7 @@ const StyledKanbanLaneHeaderActionButton = styled(AddCircleOutline)`
 export {
   StyledKanbanLane,
   StyledKanbanLaneHeader,
+  StyledKanbanLaneTitle,
   StyledKanbanLaneCardsHolder,
   StyledKanbanLaneHeaderActionButton,
 };

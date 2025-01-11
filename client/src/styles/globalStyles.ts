@@ -10,6 +10,10 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  html, body {
+  height: 100%;
+  }
+
   body {
     margin: 0 auto;
     padding: 1rem;
@@ -17,6 +21,10 @@ const GlobalStyles = createGlobalStyle`
     font-family: 'Roboto', sans-serif;
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.text}; 
+  }
+
+  #root {
+    height: 100%;
   }
 
   a {
