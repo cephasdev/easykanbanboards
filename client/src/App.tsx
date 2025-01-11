@@ -1,5 +1,5 @@
 import { ThemeProvider } from 'styled-components';
-import Board from './components/Board/Board';
+import Board from './pages/Board/Board';
 import { theme } from './styles/theme';
 import GlobalStyles from './styles/globalStyles';
 import { Provider } from 'react-redux';

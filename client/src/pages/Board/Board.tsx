@@ -1,7 +1,7 @@
 import { CardStatus } from '../../entities/enumerations/CardStatus';
 import KanbanLaneTypes from '../../entities/enumerations/KanbanLaneTypes';
-import Card from '../Card/Card';
-import KanbanLane from '../KanbanLane/KanbanLane';
+import Card from '../../components/Card/Card';
+import KanbanLane from '../../components/KanbanLane/KanbanLane';
 import StyledBoard from './Board.styles';
 import { RootState } from '../../app/store';
 import { useSelector } from 'react-redux';
