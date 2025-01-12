@@ -17,14 +17,6 @@ app.use(
   })
 );
 
-// app.all(
-//   "/graphql",
-//   createHandler({
-//     schema: schema,
-//     rootValue: root,
-//   })
-// );
-
 app.get("/playground", expressPlayground({ endpoint: "/graphql" }));
 
 const port = process.env.PORT || 4000;
