@@ -34,7 +34,10 @@ const KanbanLane = ({
       <StyledKanbanLaneHeader>
         <StyledKanbanLaneTitle>{title}</StyledKanbanLaneTitle>
         {numberOfCards && <div>{`(${numberOfCards})`}</div>}
-        <StyledKanbanLaneHeaderActionButton onClick={() => onCardAdded(type)} />
+        <StyledKanbanLaneHeaderActionButton
+          onClick={() => onCardAdded(type)}
+          aria-label="add new card"
+        />
       </StyledKanbanLaneHeader>
       <StyledKanbanLaneCardsHolder ref={setNodeRef}>
         {children}

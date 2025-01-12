@@ -47,7 +47,10 @@ const CardForm = ({ initialValues, onSubmit, onClose }: ICardFormProps) => {
   };
 
   return (
-    <StyledFormWrapper onSubmit={handleSubmit(() => onSubmit(values))}>
+    <StyledFormWrapper
+      onSubmit={handleSubmit(() => onSubmit(values))}
+      noValidate
+    >
       <StyledLabel htmlFor="cardTitle">Title</StyledLabel>
       <StyledInput
         id="cardTitle"
