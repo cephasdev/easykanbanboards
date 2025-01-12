@@ -1,4 +1,3 @@
-import 'jest-styled-components';
 import { render, screen, fireEvent } from '@testing-library/react';
 import Modal from './Modal';
 import { ThemeProvider } from 'styled-components';
