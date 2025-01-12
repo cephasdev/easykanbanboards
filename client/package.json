@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "test:coverage:full": "npm test --coverage --watchAll --collectCoverageFrom='src/components/**/*.{ts,tsx}'"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
