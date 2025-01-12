@@ -1,4 +1,9 @@
-import { getAllUsers, getUserById } from "../database";
+import {
+  getAllCards,
+  getAllUsers,
+  getCardById,
+  getUserById,
+} from "../database";
 
 export const root = {
   hello: () => {
@@ -13,5 +18,13 @@ export const root = {
   // Resolver for getting all users
   users: () => {
     return getAllUsers();
+  },
+
+  cardById: (id: string) => {
+    return getCardById(id);
+  },
+
+  cards: () => {
+    return getAllCards();
   },
 };
