@@ -31,7 +31,6 @@ const Card = ({
       {...listeners}
       ref={setNodeRef}
       onDoubleClick={() => {
-        console.log('Card double clicked');
         onDoubleClick();
       }}
       style={style}
@@ -39,7 +38,7 @@ const Card = ({
       <StyledCloseButton
         aria-label="close card"
         className="close-card"
-        onClick={onCardCloseClicked}
+        onMouseDown={onCardCloseClicked}
       />
       <h3>{title}</h3>
     </StyledCard>
