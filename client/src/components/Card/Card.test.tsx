@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import Card from './Card';
-// import '@testing-library/jest-dom'; // this worked!
+import 'jest-styled-components';
+import { ThemeProvider } from 'styled-components';
+import { theme } from '../../styles/theme';
 
 describe('Card Component', () => {
   test('should render the Card component', () => {
@@ -10,12 +12,14 @@ describe('Card Component', () => {
     const cardTitle = 'Test card title';
     // Act
     render(
-      <Card
-        title={cardTitle}
-        cardId={''}
-        onDoubleClick={onDoubleClick}
-        onCardCloseClicked={onCardCloseClicked}
-      />,
+      <ThemeProvider theme={theme}>
+        <Card
+          title={cardTitle}
+          cardId={''}
+          onDoubleClick={onDoubleClick}
+          onCardCloseClicked={onCardCloseClicked}
+        />
+      </ThemeProvider>,
     );
     // Assert
     const el = screen.getByText(cardTitle);
