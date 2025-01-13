@@ -4,10 +4,12 @@ import { schema } from "./graphql/schema";
 import { root } from "./graphql/resolvers";
 import { createHandler } from "graphql-http/lib/use/express";
 import expressPlayground from "graphql-playground-middleware-express";
+import helmet from "helmet";
 
 const app = express();
 
 app.use(express.json());
+app.use(helmet());
 
 const corsOptions = {
   origin: "http://localhost:5173", // TODO: Move to a environment-specific .env file.
