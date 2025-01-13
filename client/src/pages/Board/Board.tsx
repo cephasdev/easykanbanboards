@@ -3,17 +3,9 @@ import KanbanLaneTypes from '../../entities/enumerations/KanbanLaneTypes';
 import Card from '../../components/Card/Card';
 import KanbanLane from '../../components/KanbanLane/KanbanLane';
 import StyledBoard from './Board.styles';
-import { AppDispatch, RootState } from '../../state/store';
-import { useDispatch, useSelector } from 'react-redux';
 import Modal from '../../components/Modal/Modal';
 import { useEffect, useState } from 'react';
 import CardForm from '../../components/Form/CardForm';
-import {
-  addCard,
-  removeCard,
-  updateCard,
-  updateCardStatus,
-} from '../../state/cards/cards-slice';
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
 import {
   useAddCardMutation,
@@ -21,7 +13,6 @@ import {
   useGetAllCardsQuery,
   useUpdateCardMutation,
 } from '../../state/api/api-slice';
-// import ICard from '@/entities/interfaces/ICard';
 
 const Board = () => {
   const [isCardOpenForEditing, setIsCardOpenForEditing] =
@@ -33,8 +24,6 @@ const Board = () => {
   const [editFormInitialValues, setEditFormInitialValues] = useState<
     Record<string, string>
   >({ cardTitle: '' });
-  // const cards = useSelector((state: RootState) => state.cards.cards);
-  const dispatch = useDispatch<AppDispatch>();
 
   const { data, error, isLoading } = useGetAllCardsQuery();
   const cards = data?.data.getAllCards ?? [];
@@ -70,18 +59,6 @@ const Board = () => {
 
     if (idOfCardOpenedForEditing) {
       console.log('Editing card: ', idOfCardOpenedForEditing);
-      // dispatch(
-      //   updateCard({
-      //     id: idOfCardOpenedForEditing,
-      //     title: values.cardTitle,
-      //     description: '',
-      //     status: newCardStatus,
-      //     createdBy: '1',
-      //     assignedTo: '1',
-      //     createdAt: new Date().toISOString(), // TODO: keep the original date
-      //     updatedAt: new Date().toISOString(),
-      //   }),
-      // );
       updateCard({
         id: idOfCardOpenedForEditing,
         title: values.cardTitle,
@@ -90,18 +67,6 @@ const Board = () => {
         assignedTo: '1', // TODO: keep the original
       });
     } else {
-      // dispatch(
-      //   addCard({
-      //     id: Math.round(Math.random() * 100).toString(),
-      //     title: values.cardTitle,
-      //     description: '',
-      //     status: newCardStatus,
-      //     createdBy: '1',
-      //     assignedTo: '1',
-      //     createdAt: new Date().toISOString(),
-      //     updatedAt: new Date().toISOString(),
-      //   }),
-      // );
       addCard({
         title: values.cardTitle,
         description: '',
@@ -123,7 +88,6 @@ const Board = () => {
 
   const onCardDelete = async (id: string) => {
     console.log('Delete card', id);
-    // dispatch(removeCard(id));
     const result = await deleteCard(id).unwrap();
   };
 
@@ -144,14 +108,6 @@ const Board = () => {
       newCardStatus = CardStatus.DONE;
     }
 
-    // // dispatch(
-    // //   updateCardStatus({
-    // //     id: draggedCardId,
-    // //     status: newCardStatus,
-    // //   }),
-    // // );
-    // // // const {data, error, isLoading} = useUpdateCardMutation();
-    // await updateCardStatus({
     const card = cards.find((card) => card.id === draggedCardId);
     const result = updateCard({
       id: draggedCardId,
