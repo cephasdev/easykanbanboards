@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import ICard from '../../entities/interfaces/ICard';
 import { CardStatus } from '../../entities/enumerations/CardStatus';
 
-interface CardsState {
+export interface CardsState {
   cards: ICard[];
 }
 

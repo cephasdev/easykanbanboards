@@ -3,7 +3,7 @@ import KanbanLaneTypes from '../../entities/enumerations/KanbanLaneTypes';
 import Card from '../../components/Card/Card';
 import KanbanLane from '../../components/KanbanLane/KanbanLane';
 import StyledBoard from './Board.styles';
-import { AppDispatch, RootState } from '../../app/store';
+import { AppDispatch, RootState } from '../../state/store';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from '../../components/Modal/Modal';
 import { useEffect, useState } from 'react';
@@ -13,8 +13,10 @@ import {
   removeCard,
   updateCard,
   updateCardStatus,
-} from '../../features/cards/cards-slice';
+} from '../../state/cards/cards-slice';
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
+import { useGetAllCardsQuery } from '../../state/api/api-slice';
+import ICard from '@/entities/interfaces/ICard';
 
 const Board = () => {
   const [isCardOpenForEditing, setIsCardOpenForEditing] =
@@ -28,6 +30,8 @@ const Board = () => {
   >({ cardTitle: '' });
   const cards = useSelector((state: RootState) => state.cards.cards);
   const dispatch = useDispatch<AppDispatch>();
+
+  const { data, error, isLoading } = useGetAllCardsQuery({});
 
   useEffect(() => {
     if (!isCardOpenForEditing) {

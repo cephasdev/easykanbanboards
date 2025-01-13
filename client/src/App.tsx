@@ -3,7 +3,7 @@ import Board from './pages/Board/Board';
 import { theme } from './styles/theme';
 import GlobalStyles from './styles/globalStyles';
 import { Provider } from 'react-redux';
-import { store } from './app/store';
+import { store } from './state/store';
 import {
   AppLayout,
   Footer,
