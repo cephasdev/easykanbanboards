@@ -138,7 +138,7 @@ export const getCardById = (id: string): ICard | undefined => {
 export const addCard = (card: ICard): ICard => {
   const newCard: ICard = {
     ...card,
-    id: (cards.length + 1).toString(),
+    id: Math.round(Math.random() * 100).toString(),
     assignedTo: "999",
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
@@ -150,7 +150,11 @@ export const addCard = (card: ICard): ICard => {
 export const updateCard = (id: string, card: ICard): ICard | undefined => {
   const index = cards.findIndex((c) => c.id === id);
   if (index !== -1) {
-    cards[index] = { ...cards[index], id, updatedAt: new Date().toISOString() };
+    cards[index] = {
+      ...cards[index],
+      ...card,
+      updatedAt: new Date().toISOString(),
+    };
     console.log("Updated card: ", cards[index]);
     return cards[index];
   }

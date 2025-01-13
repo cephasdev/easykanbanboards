@@ -65,6 +65,12 @@ export const root = {
     return updateCard(card.id || "", card);
   },
 
+  // updateCardStatus: (params: { id: string, status: string }) => {
+  //   console.log("Received params", { params });
+  //   const { id, status } = params;
+  //   return updateCardStatus(card.id || "", card);
+  // },
+
   deleteCard: (params: { id: string }) => {
     console.log("Received params: ", params);
     const { id } = params;

@@ -15,8 +15,13 @@ import {
   updateCardStatus,
 } from '../../state/cards/cards-slice';
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
-import { useGetAllCardsQuery } from '../../state/api/api-slice';
-import ICard from '@/entities/interfaces/ICard';
+import {
+  useAddCardMutation,
+  useDeleteCardMutation,
+  useGetAllCardsQuery,
+  useUpdateCardMutation,
+} from '../../state/api/api-slice';
+// import ICard from '@/entities/interfaces/ICard';
 
 const Board = () => {
   const [isCardOpenForEditing, setIsCardOpenForEditing] =
@@ -28,10 +33,19 @@ const Board = () => {
   const [editFormInitialValues, setEditFormInitialValues] = useState<
     Record<string, string>
   >({ cardTitle: '' });
-  const cards = useSelector((state: RootState) => state.cards.cards);
+  // const cards = useSelector((state: RootState) => state.cards.cards);
   const dispatch = useDispatch<AppDispatch>();
 
-  const { data, error, isLoading } = useGetAllCardsQuery({});
+  const { data, error, isLoading } = useGetAllCardsQuery();
+  const cards = data?.data.getAllCards ?? [];
+  console.log({
+    data,
+    cards,
+  });
+
+  const [addCard] = useAddCardMutation();
+  const [updateCard] = useUpdateCardMutation();
+  const [deleteCard] = useDeleteCardMutation();
 
   useEffect(() => {
     if (!isCardOpenForEditing) {
@@ -56,31 +70,44 @@ const Board = () => {
 
     if (idOfCardOpenedForEditing) {
       console.log('Editing card: ', idOfCardOpenedForEditing);
-      dispatch(
-        updateCard({
-          id: idOfCardOpenedForEditing,
-          title: values.cardTitle,
-          description: '',
-          status: newCardStatus,
-          createdBy: '1',
-          assignedTo: '1',
-          createdAt: new Date().toISOString(), // TODO: keep the original date
-          updatedAt: new Date().toISOString(),
-        }),
-      );
+      // dispatch(
+      //   updateCard({
+      //     id: idOfCardOpenedForEditing,
+      //     title: values.cardTitle,
+      //     description: '',
+      //     status: newCardStatus,
+      //     createdBy: '1',
+      //     assignedTo: '1',
+      //     createdAt: new Date().toISOString(), // TODO: keep the original date
+      //     updatedAt: new Date().toISOString(),
+      //   }),
+      // );
+      updateCard({
+        id: idOfCardOpenedForEditing,
+        title: values.cardTitle,
+        description: '',
+        status: newCardStatus,
+        assignedTo: '1', // TODO: keep the original
+      });
     } else {
-      dispatch(
-        addCard({
-          id: Math.round(Math.random() * 100).toString(),
-          title: values.cardTitle,
-          description: '',
-          status: newCardStatus,
-          createdBy: '1',
-          assignedTo: '1',
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        }),
-      );
+      // dispatch(
+      //   addCard({
+      //     id: Math.round(Math.random() * 100).toString(),
+      //     title: values.cardTitle,
+      //     description: '',
+      //     status: newCardStatus,
+      //     createdBy: '1',
+      //     assignedTo: '1',
+      //     createdAt: new Date().toISOString(),
+      //     updatedAt: new Date().toISOString(),
+      //   }),
+      // );
+      addCard({
+        title: values.cardTitle,
+        description: '',
+        status: newCardStatus,
+        createdBy: '1',
+      });
     }
     setIsCardOpenForEditing(false);
   };
@@ -94,9 +121,10 @@ const Board = () => {
     setIsCardOpenForEditing(true);
   };
 
-  const onCardDelete = (id: string) => {
+  const onCardDelete = async (id: string) => {
     console.log('Delete card', id);
-    dispatch(removeCard(id));
+    // dispatch(removeCard(id));
+    const result = await deleteCard(id).unwrap();
   };
 
   const onDragEnd = (ev: DragEndEvent) => {
@@ -116,12 +144,22 @@ const Board = () => {
       newCardStatus = CardStatus.DONE;
     }
 
-    dispatch(
-      updateCardStatus({
-        id: draggedCardId,
-        status: newCardStatus,
-      }),
-    );
+    // // dispatch(
+    // //   updateCardStatus({
+    // //     id: draggedCardId,
+    // //     status: newCardStatus,
+    // //   }),
+    // // );
+    // // // const {data, error, isLoading} = useUpdateCardMutation();
+    // await updateCardStatus({
+    const card = cards.find((card) => card.id === draggedCardId);
+    const result = updateCard({
+      id: draggedCardId,
+      title: card?.title || '',
+      description: card?.description || '',
+      status: newCardStatus,
+      assignedTo: card?.assignedTo || '',
+    }).unwrap();
   };
 
   return (

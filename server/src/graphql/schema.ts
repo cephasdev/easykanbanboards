@@ -25,7 +25,7 @@ export const schema = buildSchema(`
       title: String!,
       description: String!,
       status: String!,
-      createdBy: String!,
+      createdBy: String,
       assignedTo: String
     }
 
@@ -49,3 +49,5 @@ export const schema = buildSchema(`
       deleteUser(id: String!): User
     }
   `);
+
+// updateCardStatus(id: String!, status: String!): Card,
