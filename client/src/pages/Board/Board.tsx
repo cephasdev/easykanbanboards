@@ -109,6 +109,12 @@ const Board = () => {
     }
 
     const card = cards.find((card) => card.id === draggedCardId);
+
+    const cardStatusShouldChange = card?.status !== newCardStatus;
+    if (!cardStatusShouldChange) {
+      return;
+    }
+
     const result = updateCard({
       id: draggedCardId,
       title: card?.title || '',
