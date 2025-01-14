@@ -4,14 +4,14 @@ import {
   ICardUpdateInput,
   ICardUpdateResponse,
   IGetAllCardsResponse,
-} from '@/entities/api/cards';
+} from '../../entities/api/cards';
 import {
   IGetAllUsersResponse,
   IUserAddInput,
   IUserAddResponse,
   IUserUpdateInput,
   IUserUpdateResponse,
-} from '@/entities/api/users';
+} from '../../entities/api/users';
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 

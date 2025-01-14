@@ -78,7 +78,18 @@ cd easykanbanboards
 - Start the backend server first, as the frontend relies on the backend API for data.
 - Open your browser and navigate to `http://localhost:5173` to interact with the application.
 
+## Running tests
+
 ## Directory Structure
+
+1. Navigate to the frontend directory:
+   ```bash
+   cd frontend
+   ```
+2. Run the tests:
+   ```bash
+    npm run test
+   ```
 
 ```
 project-root
