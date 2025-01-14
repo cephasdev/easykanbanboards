@@ -40,7 +40,7 @@ const StyledKanbanLane = styled.div<IKanbanLaneProps>`
             background-color: ${theme.colors.kanbanTypes.inProgress.background};
           }
           ${StyledCard} {
-            background-color: ${theme.colors.kanbanTypes.toDo.card};
+            background-color: ${theme.colors.kanbanTypes.inProgress.card};
           }
         `;
       case KanbanLaneTypes.done:
@@ -53,7 +53,7 @@ const StyledKanbanLane = styled.div<IKanbanLaneProps>`
             background-color: ${theme.colors.kanbanTypes.done.background};
           }
           ${StyledCard} {
-            background-color: ${theme.colors.kanbanTypes.toDo.card};
+            background-color: ${theme.colors.kanbanTypes.done.card};
           }
         `;
       default:
