@@ -18,7 +18,7 @@ const StyledLabel = styled.label`
 
 const StyledInput = styled.input`
   padding: ${({ theme }) => theme.spacing(2)};
-  border-radius: ${({ theme }) => theme.spacing(2)};
+  border-radius: ${({ theme }) => theme.spacing(1)};
   border: 1px solid ${({ theme }) => theme.colors.primary};
 `;
 

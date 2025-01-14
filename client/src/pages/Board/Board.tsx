@@ -58,7 +58,6 @@ const Board = () => {
     }
 
     if (idOfCardOpenedForEditing) {
-      console.log('Editing card: ', idOfCardOpenedForEditing);
       updateCard({
         id: idOfCardOpenedForEditing,
         title: values.cardTitle,
@@ -78,10 +77,17 @@ const Board = () => {
   };
 
   const openCardForEditing = (id: string) => {
+    const cardStatus = cards.find((card) => card.id === id)?.status;
+    let kanbanLaneType = KanbanLaneTypes.toDo;
+    if (cardStatus === CardStatus.IN_PROGRESS) {
+      kanbanLaneType = KanbanLaneTypes.inProgress;
+    } else if (cardStatus === CardStatus.DONE) {
+      kanbanLaneType = KanbanLaneTypes.done;
+    }
+    setTypeOfCardOpenedForEditing(kanbanLaneType);
     setEditFormInitialValues({
       cardTitle: cards.find((card) => card.id === id)?.title || '',
     });
-    console.log('Open card for editing, id: ', id);
     setIdOfCardOpenedForEditing(id);
     setIsCardOpenForEditing(true);
   };
