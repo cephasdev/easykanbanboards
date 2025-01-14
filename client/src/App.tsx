@@ -25,7 +25,7 @@ function App() {
             <Board />
           </Main>
 
-          <Footer>Copyright: Dragan Radic, 2025</Footer>
+          <Footer>Copyright: Dragan Radic, {new Date().getFullYear()}</Footer>
         </AppLayout>
       </ThemeProvider>
     </Provider>

@@ -15,9 +15,6 @@ const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    margin: 0 auto;
-    padding: 0 1rem;
-    max-width: 1200px;
     font-family: 'Roboto', sans-serif;
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.text}; 
