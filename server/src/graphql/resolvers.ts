@@ -18,6 +18,8 @@ export const root = {
     return "Hi there! From GraphQL and graphql-http :) ";
   },
 
+  // Users
+
   getAllUsers: () => {
     return getAllUsers();
   },
@@ -27,27 +29,36 @@ export const root = {
     return getUserById(id);
   },
 
-  addUser: (name: string) => {
-    return addUser(name);
+  addUser: (params: { user: IUser }) => {
+    const { user } = params;
+    console.log("Received user", { user });
+    const newUser = addUser(user);
+    console.log("New user", { newUser });
+    return newUser;
   },
 
-  updateUser: (params: { id: string; user: IUser }) => {
-    return updateUser(params);
+  updateUser: (params: { user: IUser }) => {
+    console.log("Received params", { params });
+    const { user } = params;
+    console.log("Received user", { user });
+    return updateUser(user.id || "", user);
   },
 
-  deleteUser: (id: string) => {
+  deleteUser: (params: { id: string }) => {
+    console.log("Received params: ", params);
+    const { id } = params;
     return deleteUser(id);
   },
 
   // Cards
 
+  getAllCards: () => {
+    return getAllCards();
+  },
+
   getCardById: (params: { id: string }) => {
     const { id } = params;
     return getCardById(id);
-  },
-
-  getAllCards: () => {
-    return getAllCards();
   },
 
   addCard: (params: { card: ICard }) => {
@@ -64,12 +75,6 @@ export const root = {
     console.log("Received card", { card });
     return updateCard(card.id || "", card);
   },
-
-  // updateCardStatus: (params: { id: string, status: string }) => {
-  //   console.log("Received params", { params });
-  //   const { id, status } = params;
-  //   return updateCardStatus(card.id || "", card);
-  // },
 
   deleteCard: (params: { id: string }) => {
     console.log("Received params: ", params);

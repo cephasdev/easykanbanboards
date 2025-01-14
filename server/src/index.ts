@@ -21,7 +21,7 @@ app.use(
   "/graphql",
   createHandler({
     schema,
-    rootValue: root,
+    rootValue: root, // TODO: Split cards- and users root resolvers.
   })
 );
 

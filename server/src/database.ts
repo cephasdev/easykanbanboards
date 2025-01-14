@@ -92,21 +92,24 @@ To call previous resolver function:
 }}
 */
 
-export const addUser = (name: string): IUser => {
+// export const addUser = (name: string): IUser => {
+//   const newUser: IUser = {
+//     id: (users.length + 1).toString(),
+//     name,
+//   };
+//   users.push(newUser);
+//   return newUser;
+// };
+export const addUser = (user: IUser): IUser => {
   const newUser: IUser = {
-    id: (users.length + 1).toString(),
-    name,
+    ...user,
+    id: Math.round(Math.random() * 100).toString(),
   };
   users.push(newUser);
   return newUser;
 };
 
-export const updateUser = (params: {
-  id: string;
-  user: IUser;
-}): IUser | undefined => {
-  console.log("Received params: ", params);
-  const { id, user } = params;
+export const updateUser = (id: string, user: IUser): IUser | undefined => {
   const index = users.findIndex((u) => u.id === id);
   if (index !== -1) {
     users[index] = { ...user, id };

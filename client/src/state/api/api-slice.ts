@@ -5,13 +5,22 @@ import {
   ICardUpdateResponse,
   IGetAllCardsResponse,
 } from '@/entities/api/cards';
+import {
+  IGetAllUsersResponse,
+  IUserAddInput,
+  IUserAddResponse,
+  IUserUpdateInput,
+  IUserUpdateResponse,
+} from '@/entities/api/users';
+
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:4000/graphql' }),
   // tagTypes: ['Boards', 'Cards', 'Users'],
-  tagTypes: ['Cards'],
+  tagTypes: ['Cards', 'Users'],
+  // cards
   endpoints: (builder) => ({
     getAllCards: builder.query<IGetAllCardsResponse, void>({
       query: () => ({
@@ -105,6 +114,66 @@ export const apiSlice = createApi({
         },
       }),
       invalidatesTags: ['Cards'],
+    }),
+    // users
+    getAllUsers: builder.query<IGetAllUsersResponse, void>({
+      query: () => ({
+        url: '',
+        method: 'POST',
+        body: {
+          query: `{ getAllUsers {
+                    id
+                    name
+                } }`,
+        },
+      }),
+      providesTags: ['Users'],
+    }),
+    addUser: builder.mutation<IUserAddResponse, IUserAddInput>({
+      query: (user) => ({
+        url: '',
+        method: 'POST',
+        body: {
+          query: `mutation {
+                addUser(user: {
+                    name: "${user.name}",
+                }) {
+                    id
+                    name
+                }
+            }`,
+        },
+      }),
+    }),
+    updateUser: builder.mutation<IUserUpdateResponse, IUserUpdateInput>({
+      query: (user) => ({
+        url: '',
+        method: 'POST',
+        body: {
+          query: `mutation {
+                updateUser(id: "${user.id}", user: {
+                    name: "${user.name}",
+                }) {
+                    id
+                    name
+                }
+            }`,
+        },
+      }),
+    }),
+    deleteUser: builder.mutation<IUserUpdateResponse, string>({
+      query: (id) => ({
+        url: '',
+        method: 'POST',
+        body: {
+          query: `mutation {
+                    deleteUser(id: "${id}") {
+                        id
+                        name
+                    }
+                }`,
+        },
+      }),
     }),
   }),
 });
