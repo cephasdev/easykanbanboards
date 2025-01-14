@@ -54,11 +54,6 @@ cd easykanbanboards
    MONGO_URI=<your_mongodb_connection_string>
    PORT=5000
    ```
-4. Start the backend server:
-   ```bash
-   npm run dev
-   ```
-   The backend server will run on `http://localhost:4000`.
 
 #### Frontend Setup
 
@@ -70,10 +65,12 @@ cd easykanbanboards
    ```bash
    npm install
    ```
-3. Start the frontend server:
+3. Start the application by running:
    ```bash
-   npm run dev
+   npm run start:app
    ```
+   This will start both backend- and frontend server in parallel.
+   The backend server will run on `http://localhost:4000`.
    The frontend application will run on `http://localhost:5173`.
 
 ### Running the Application
