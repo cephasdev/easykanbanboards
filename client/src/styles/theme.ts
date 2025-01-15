@@ -30,5 +30,11 @@ export const theme = {
       },
     },
   },
+
   spacing: (factor: number) => `${0.25 * factor}rem`, // e.g. theme.spacing(2) => '0.5rem'
+
+  breakpoints: {
+    mobile: '48rem',
+    tablet: '64rem',
+  },
 };

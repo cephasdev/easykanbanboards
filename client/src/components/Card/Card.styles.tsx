@@ -21,12 +21,13 @@ const StyledCard = styled.div`
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 1.5rem 1rem;
-  margin-bottom: ${({ theme }) => theme.spacing(2)};
+  margin: ${({ theme }) => theme.spacing(1)};
   color: ${({ theme }) => theme.colors.textOnDark};
   cursor: grab;
   &:hover ${StyledCloseButton} {
     visibility: visible;
   }
+  touch-action: none; // prevents issues on mobile devices, https://github.com/clauderic/dnd-kit/issues/435#issuecomment-905879502
 `;
 
 export { StyledCard, StyledCloseButton };

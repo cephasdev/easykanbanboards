@@ -60,6 +60,13 @@ const StyledKanbanLane = styled.div<IKanbanLaneProps>`
         return theme.colors.primary;
     }
   }}
+  margin-top: ${({ theme }) => theme.spacing(2)};
+  margin-bottom: ${({ theme }) => theme.spacing(2)};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    margin-top: ${({ theme }) => theme.spacing(4)};
+    margin-bottom: ${({ theme }) => theme.spacing(4)};
+  }
 `;
 
 const StyledKanbanLaneHeader = styled.div`
@@ -78,10 +85,14 @@ const StyledKanbanLaneTitle = styled.h2`
 
 const StyledKanbanLaneCardsHolder = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   padding: 1rem;
   color: #fff;
   flex: 1;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    flex-direction: column;
+  }
 `;
 
 const StyledKanbanLaneHeaderActionButton = styled(AddCircleOutline)`
