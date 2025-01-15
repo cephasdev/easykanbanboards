@@ -5,6 +5,11 @@ import { root } from "./graphql/resolvers";
 import { createHandler } from "graphql-http/lib/use/express";
 import expressPlayground from "graphql-playground-middleware-express";
 import helmet from "helmet";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import connectToDb from "./db/connection";
+
+dotenv.config();
 
 const app = express();
 
@@ -26,6 +31,8 @@ app.use(
 );
 
 app.get("/playground", expressPlayground({ endpoint: "/graphql" }));
+
+connectToDb();
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => {

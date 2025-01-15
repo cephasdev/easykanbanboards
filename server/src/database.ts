@@ -1,3 +1,5 @@
+import Card from "./db/schema";
+
 // src/database.ts
 export interface IUser {
   id: string;
@@ -28,51 +30,6 @@ const users: IUser[] = [
   { id: "3", name: "Charlie" },
 ];
 
-const cards: ICard[] = [
-  {
-    id: "1",
-    title: "First Card",
-    description: "This is the first card",
-    status: CardStatus.TODO,
-    createdBy: "1",
-    assignedTo: "2",
-    createdAt: "2021-08-22T10:00:00Z",
-    updatedAt: "2021-08-22T10:00:00Z",
-  },
-  {
-    id: "2",
-    title: "Second Card",
-    description: "This is the second card",
-    status: CardStatus.IN_PROGRESS,
-    createdBy: "1",
-    assignedTo: "3",
-    createdAt: "2021-08-22T11:00:00Z",
-    updatedAt: "2021-08-22T11:00:00Z",
-  },
-  {
-    id: "3",
-    title: "Third Card",
-    description: "This is the third card",
-    status: CardStatus.DONE,
-    createdBy: "3",
-    assignedTo: "2",
-    createdAt: "2021-08-22T12:00:00Z",
-    updatedAt: "2021-08-22T12:00:00Z",
-  },
-  {
-    id: "4",
-    title: "Fourth Card",
-    description: "This is the fourth card",
-    status: CardStatus.DONE,
-    createdBy: "3",
-    assignedTo: "2",
-    createdAt: "2021-08-22T12:00:00Z",
-    updatedAt: "2021-08-22T12:00:00Z",
-  },
-];
-
-// Users
-
 export const getAllUsers = (): IUser[] => {
   return users;
 };
@@ -92,14 +49,6 @@ To call previous resolver function:
 }}
 */
 
-// export const addUser = (name: string): IUser => {
-//   const newUser: IUser = {
-//     id: (users.length + 1).toString(),
-//     name,
-//   };
-//   users.push(newUser);
-//   return newUser;
-// };
 export const addUser = (user: IUser): IUser => {
   const newUser: IUser = {
     ...user,
@@ -129,16 +78,32 @@ export const deleteUser = (id: string): IUser | undefined => {
 
 // Cards
 
-export const getAllCards = (): ICard[] => {
-  return cards;
+export const getAllCards = async (): Promise<ICard[]> => {
+  try {
+    const cards = await Card.find();
+    console.log("Mongoose: getAllCards", cards);
+    return cards;
+  } catch (error) {
+    console.error("Error getting cards from MongoDB: ", error);
+  }
+
+  return [];
 };
 
-export const getCardById = (id: string): ICard | undefined => {
+export const getCardById = async (id: string): Promise<ICard | null> => {
   console.log("Received id: ", id);
-  return cards.find((card) => card.id === id);
+  try {
+    const card = await Card.findById(id);
+    console.log("Mongoose: getCardById", card);
+    return card;
+  } catch (error) {
+    console.error("Error getting card from MongoDB: ", error);
+    return null;
+  }
 };
 
-export const addCard = (card: ICard): ICard => {
+export const addCard = async (card: ICard): Promise<ICard> => {
+  console.log("database.ts: received card", card);
   const newCard: ICard = {
     ...card,
     id: Math.round(Math.random() * 100).toString(),
@@ -146,29 +111,49 @@ export const addCard = (card: ICard): ICard => {
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   };
-  cards.push(newCard);
+  console.log("database.ts: card for persisting to DB:", newCard);
+
+  try {
+    // add to MongoDB using mongoose
+    const cardModel = new Card(newCard);
+    await cardModel.save().then((result) => {
+      console.log("Saved to MongoDB: ", result);
+    });
+  } catch (error) {
+    console.error("Error saving to MongoDB: ", error);
+  }
   return newCard;
 };
 
-export const updateCard = (id: string, card: ICard): ICard | undefined => {
-  const index = cards.findIndex((c) => c.id === id);
-  if (index !== -1) {
-    cards[index] = {
-      ...cards[index],
+export const updateCard = async (
+  id: string,
+  card: ICard
+): Promise<ICard | null> => {
+  try {
+    const updatedCard = await Card.findByIdAndUpdate(id, {
       ...card,
       updatedAt: new Date().toISOString(),
-    };
-    console.log("Updated card: ", cards[index]);
-    return cards[index];
+    }).then((result) => {
+      console.log("Mongoose: updateCard", result);
+      return result;
+    });
+    return updatedCard;
+  } catch (error) {
+    console.error("Error updating card in MongoDB: ", error);
+    return null;
   }
-  return undefined;
 };
 
-export const deleteCard = (id: string): ICard | undefined => {
+export const deleteCard = async (id: string): Promise<ICard | null> => {
   console.log("Received id: ", id);
-  const index = cards.findIndex((card) => card.id === id);
-  if (index !== -1) {
-    return cards.splice(index, 1)[0];
+  try {
+    const deletedCard = await Card.findByIdAndDelete(id).then((result) => {
+      console.log("Mongoose: deleteCard", result);
+      return result;
+    });
+    return deletedCard;
+  } catch (error) {
+    console.error("Error deleting card from MongoDB: ", error);
+    return null;
   }
-  return undefined;
 };
