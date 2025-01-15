@@ -1,4 +1,4 @@
-import Card from "./db/schema";
+import Card, { ICardDocument } from "./db/schema";
 
 // src/database.ts
 export interface IUser {
@@ -80,9 +80,15 @@ export const deleteUser = (id: string): IUser | undefined => {
 
 export const getAllCards = async (): Promise<ICard[]> => {
   try {
-    const cards = await Card.find();
+    const cards = (await Card.find()) as ICardDocument[];
     console.log("Mongoose: getAllCards", cards);
-    return cards;
+    const mapped = cards.map((card) => {
+      return {
+        ...card.toObject(),
+        id: card.toObject()._id.toString(),
+      };
+    });
+    return mapped;
   } catch (error) {
     console.error("Error getting cards from MongoDB: ", error);
   }

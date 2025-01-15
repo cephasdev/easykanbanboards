@@ -63,9 +63,9 @@ export const root = {
 
   addCard: (params: { card: ICard }) => {
     const { card } = params;
-    console.log("Received card", { card });
+    console.log("Received card 1", { card });
     const newCard = addCard(card);
-    console.log("New card", { newCard });
+    console.log("New card 1", { newCard });
     return newCard;
   },
 

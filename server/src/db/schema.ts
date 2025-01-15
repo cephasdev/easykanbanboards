@@ -1,6 +1,6 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, ObjectId } from "mongoose";
 
-export interface ICard extends Document {
+export interface ICardDocument extends Document {
   id: string;
   title: string;
   description: string;
@@ -22,6 +22,6 @@ const CardSchema: Schema = new Schema({
   updatedAt: { type: String, required: true },
 });
 
-const Card = mongoose.model<ICard>("Card", CardSchema);
+const Card = mongoose.model<ICardDocument>("Card", CardSchema);
 
 export default Card;
