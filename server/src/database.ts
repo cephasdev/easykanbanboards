@@ -1,4 +1,4 @@
-import Card, { ICardDocument } from "./db/schema";
+import Card, { ICardDocument } from "./db/schema/card";
 import User, { IUserDocument } from "./db/schema/user";
 
 // src/database.ts

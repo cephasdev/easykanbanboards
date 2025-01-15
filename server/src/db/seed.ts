@@ -1,7 +1,7 @@
 // function which seeds the MongoDB database with sample data for the Cards model
 
-import Card from "./schema";
-import User from "./schema";
+import Card from "./schema/card";
+import User from "./schema/user";
 
 enum CardStatus {
   TODO = "todo",
@@ -10,14 +10,15 @@ enum CardStatus {
 }
 
 const seed = async () => {
-  // const users = await User.find();
-  // if (users.length === 0) {
-  //   await User.create([
-  //     { name: "Alice" },
-  //     { name: "Bob" },
-  //     { name: "Charlie" },
-  //   ]);
-  // }
+  const users = await User.find();
+  if (users.length === 0) {
+    await User.create([
+      { id: "999", name: "Unassigned" },
+      { id: "1", name: "Alice" },
+      { id: "2", name: "Bob" },
+      { id: "3", name: "Charlie" },
+    ]);
+  }
 
   const cards = await Card.find();
   if (cards.length === 0) {
