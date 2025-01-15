@@ -1,4 +1,5 @@
 import Card, { ICardDocument } from "./db/schema";
+import User, { IUserDocument } from "./db/schema/user";
 
 // src/database.ts
 export interface IUser {
@@ -17,63 +18,86 @@ export interface ICard {
   updatedAt?: string; // ISO 8601 format
 }
 
-enum CardStatus {
-  TODO = "todo",
-  IN_PROGRESS = "inProgress",
-  DONE = "done",
-}
+export const getAllUsers = async (): Promise<IUser[]> => {
+  try {
+    const users = (await User.find()) as IUserDocument[];
+    console.log("Mongoose: getAllUsers", users);
+    const mapped = users.map((user) => {
+      return {
+        ...user.toObject(),
+        id: user.toObject()._id.toString(),
+      };
+    });
+    return mapped;
+  } catch (error) {
+    console.error("Error getting users from MongoDB: ", error);
+  }
 
-const users: IUser[] = [
-  { id: "999", name: "Unassigned" },
-  { id: "1", name: "Alice" },
-  { id: "2", name: "Bob" },
-  { id: "3", name: "Charlie" },
-];
-
-export const getAllUsers = (): IUser[] => {
-  return users;
+  return [];
 };
 
-export const getUserById = (id: string): IUser | undefined => {
+export const getUserById = async (id: string): Promise<IUser | null> => {
   console.log("Received id: ", id);
-  return users.find((user) => user.id === id);
+  try {
+    const user = await User.findById(id);
+    console.log("Mongoose: getUserById", user);
+    return user;
+  } catch (error) {
+    console.error("Error getting user from MongoDB: ", error);
+    return null;
+  }
 };
 
-/*
-To call previous resolver function:
-1) open http://localhost:4000/playground
-2) write the following query:
-{
-  userById(id: "2"){
-  name
-}}
-*/
-
-export const addUser = (user: IUser): IUser => {
+export const addUser = async (user: IUser): Promise<IUser> => {
+  console.log("database.ts: received user", user);
   const newUser: IUser = {
     ...user,
     id: Math.round(Math.random() * 100).toString(),
   };
-  users.push(newUser);
+  console.log("database.ts: user for persisting to DB:", newUser);
+
+  try {
+    // add to MongoDB using mongoose
+    const userModel = new User(newUser);
+    await userModel.save().then((result) => {
+      console.log("Saved to MongoDB: ", result);
+    });
+  } catch (error) {
+    console.error("Error saving to MongoDB: ", error);
+  }
   return newUser;
 };
 
-export const updateUser = (id: string, user: IUser): IUser | undefined => {
-  const index = users.findIndex((u) => u.id === id);
-  if (index !== -1) {
-    users[index] = { ...user, id };
-    return users[index];
+export const updateUser = async (
+  id: string,
+  user: IUser
+): Promise<IUser | null> => {
+  try {
+    const updatedUser = await User.findByIdAndUpdate(id, user).then(
+      (result) => {
+        console.log("Mongoose: updateUser", result);
+        return result;
+      }
+    );
+    return updatedUser;
+  } catch (error) {
+    console.error("Error updating user in MongoDB: ", error);
+    return null;
   }
-  return undefined;
 };
 
-export const deleteUser = (id: string): IUser | undefined => {
-  console.log("Received params: ", id);
-  const index = users.findIndex((user) => user.id === id);
-  if (index !== -1) {
-    return users.splice(index, 1)[0];
+export const deleteUser = async (id: string): Promise<IUser | null> => {
+  console.log("Received id: ", id);
+  try {
+    const deletedUser = await User.findByIdAndDelete(id).then((result) => {
+      console.log("Mongoose: deleteUser", result);
+      return result;
+    });
+    return deletedUser;
+  } catch (error) {
+    console.error("Error deleting user from MongoDB: ", error);
+    return null;
   }
-  return undefined;
 };
 
 // Cards
