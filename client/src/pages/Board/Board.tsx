@@ -132,6 +132,7 @@ const Board = () => {
 
   return (
     <DndContext onDragEnd={onDragEnd}>
+      {isLoading && <div>Loading...</div>}
       <StyledBoard>
         <KanbanLane
           title="To Do"

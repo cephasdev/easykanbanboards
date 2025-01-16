@@ -1,38 +1,61 @@
 import 'jest-styled-components';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
 import Board from './Board';
 import { CardStatus } from '../../entities/enumerations/CardStatus';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '../../styles/theme';
+import {
+  useGetAllCardsQuery,
+  useAddCardMutation,
+  useUpdateCardMutation,
+  useDeleteCardMutation,
+} from '../../state/api/api-slice';
 
-const mockStore = configureStore([]);
-const initialState = {
-  cards: {
-    cards: [
-      { id: '1', title: 'Test Card 1', status: CardStatus.TODO },
-      { id: '2', title: 'Test Card 2', status: CardStatus.IN_PROGRESS },
-      { id: '3', title: 'Test Card 3', status: CardStatus.DONE },
-    ],
-  },
-};
+// Mock the API hooks
+jest.mock('../../state/api/api-slice', () => ({
+  useGetAllCardsQuery: jest.fn(),
+  useAddCardMutation: jest.fn(),
+  useUpdateCardMutation: jest.fn(),
+  useDeleteCardMutation: jest.fn(),
+}));
 
 describe('Board Component', () => {
-  let store: any;
-
   beforeEach(() => {
-    store = mockStore(initialState);
+    jest.clearAllMocks();
+
+    (useGetAllCardsQuery as jest.Mock).mockReturnValue({
+      data: {
+        data: {
+          getAllCards: [
+            { id: '1', title: 'Test Card 1', status: CardStatus.TODO },
+            { id: '2', title: 'Test Card 2', status: CardStatus.IN_PROGRESS },
+            { id: '3', title: 'Test Card 3', status: CardStatus.DONE },
+          ],
+        },
+      },
+      error: null,
+      isLoading: true,
+    });
+    (useAddCardMutation as jest.Mock).mockReturnValue([jest.fn()]);
+    (useUpdateCardMutation as jest.Mock).mockReturnValue([jest.fn()]);
+    (useDeleteCardMutation as jest.Mock).mockReturnValue([jest.fn()]);
+  });
+
+  test('renders loading state initially', () => {
+    render(
+      <ThemeProvider theme={theme}>
+        <Board />
+      </ThemeProvider>,
+    );
+
+    expect(screen.getByText(/loading/i)).toBeInTheDocument();
   });
 
   test('renders lanes with correct titles and card counts', () => {
     render(
-      <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <Board />
-        </ThemeProvider>
-        ,
-      </Provider>,
+      <ThemeProvider theme={theme}>
+        <Board />
+      </ThemeProvider>,
     );
 
     expect(screen.getByText('To Do')).toBeInTheDocument();
@@ -46,11 +69,9 @@ describe('Board Component', () => {
 
   test('opens modal with form when new card button is clicked', () => {
     render(
-      <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <Board />
-        </ThemeProvider>
-      </Provider>,
+      <ThemeProvider theme={theme}>
+        <Board />
+      </ThemeProvider>,
     );
 
     fireEvent.click(screen.getAllByLabelText('add new card')[0]);
@@ -59,11 +80,9 @@ describe('Board Component', () => {
 
   test('opens card for editing when card is double-clicked', () => {
     render(
-      <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <Board />
-        </ThemeProvider>
-      </Provider>,
+      <ThemeProvider theme={theme}>
+        <Board />
+      </ThemeProvider>,
     );
 
     fireEvent.doubleClick(screen.getByText('Test Card 1'));
