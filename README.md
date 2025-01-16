@@ -49,10 +49,9 @@ cd easykanbanboards
    ```bash
    npm install
    ```
-3. Create a `.env` file in the `backend` directory with the following variables:
+3. Find the `.env.example` file in the `backend` directory, and rename it to `.env`. The only required line is this:
    ```env
-   MONGO_URI=<your_mongodb_connection_string>
-   PORT=5000
+   MONGODB_URI=<your_mongodb_connection_string>
    ```
 
 #### Frontend Setup
@@ -65,18 +64,19 @@ cd easykanbanboards
    ```bash
    npm install
    ```
-3. Start the application by running:
-   ```bash
-   npm run start:app
-   ```
-   This will start both backend- and frontend server in parallel.
-   The backend server will run on `http://localhost:4000`.
-   The frontend application will run on `http://localhost:5173`.
 
 ### Running the Application
 
-- Start the backend server first, as the frontend relies on the backend API for data.
-- Open your browser and navigate to `http://localhost:5173` to interact with the application.
+Start the application by running:
+
+```bash
+npm run start:app
+```
+
+This will start both backend- and frontend server in parallel.
+The backend server will run on `http://localhost:4000`.
+The frontend application will run on `http://localhost:5173`.
+Both services will me marked with different colors in the terminal.
 
 ## Running tests
 
@@ -93,13 +93,14 @@ cd easykanbanboards
 
 ```
 project-root
-├── backend
-│   ├── src
-│   ├── package.json
-│   ├── .env
-├── frontend
+├── server
 │   ├── src
 │   ├── package.json
 │   ├── tsconfig.json
+│   ├── .env
+├── client
+│   ├── public
+│   ├── src
+│   ├── config files (.eslintrc, .prettierrc, tsconfig.json, vite.config.ts ...)
 ├── README.md
 ```
