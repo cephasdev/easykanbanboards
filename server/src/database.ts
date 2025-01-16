@@ -21,7 +21,6 @@ export interface ICard {
 export const getAllUsers = async (): Promise<IUser[]> => {
   try {
     const users = (await User.find()) as IUserDocument[];
-    console.log("Mongoose: getAllUsers", users);
     const mapped = users.map((user) => {
       return {
         ...user.toObject(),
@@ -37,10 +36,8 @@ export const getAllUsers = async (): Promise<IUser[]> => {
 };
 
 export const getUserById = async (id: string): Promise<IUser | null> => {
-  console.log("Received id: ", id);
   try {
     const user = await User.findById(id);
-    console.log("Mongoose: getUserById", user);
     return user;
   } catch (error) {
     console.error("Error getting user from MongoDB: ", error);
@@ -49,19 +46,15 @@ export const getUserById = async (id: string): Promise<IUser | null> => {
 };
 
 export const addUser = async (user: IUser): Promise<IUser> => {
-  console.log("database.ts: received user", user);
   const newUser: IUser = {
     ...user,
     id: Math.round(Math.random() * 100).toString(),
   };
-  console.log("database.ts: user for persisting to DB:", newUser);
 
   try {
     // add to MongoDB using mongoose
     const userModel = new User(newUser);
-    await userModel.save().then((result) => {
-      console.log("Saved to MongoDB: ", result);
-    });
+    await userModel.save().then((result) => {});
   } catch (error) {
     console.error("Error saving to MongoDB: ", error);
   }
@@ -75,7 +68,6 @@ export const updateUser = async (
   try {
     const updatedUser = await User.findByIdAndUpdate(id, user).then(
       (result) => {
-        console.log("Mongoose: updateUser", result);
         return result;
       }
     );
@@ -87,10 +79,8 @@ export const updateUser = async (
 };
 
 export const deleteUser = async (id: string): Promise<IUser | null> => {
-  console.log("Received id: ", id);
   try {
     const deletedUser = await User.findByIdAndDelete(id).then((result) => {
-      console.log("Mongoose: deleteUser", result);
       return result;
     });
     return deletedUser;
@@ -105,7 +95,6 @@ export const deleteUser = async (id: string): Promise<IUser | null> => {
 export const getAllCards = async (): Promise<ICard[]> => {
   try {
     const cards = (await Card.find()) as ICardDocument[];
-    console.log("Mongoose: getAllCards", cards);
     const mapped = cards.map((card) => {
       return {
         ...card.toObject(),
@@ -121,10 +110,8 @@ export const getAllCards = async (): Promise<ICard[]> => {
 };
 
 export const getCardById = async (id: string): Promise<ICard | null> => {
-  console.log("Received id: ", id);
   try {
     const card = await Card.findById(id);
-    console.log("Mongoose: getCardById", card);
     return card;
   } catch (error) {
     console.error("Error getting card from MongoDB: ", error);
@@ -133,7 +120,6 @@ export const getCardById = async (id: string): Promise<ICard | null> => {
 };
 
 export const addCard = async (card: ICard): Promise<ICard> => {
-  console.log("database.ts: received card", card);
   const newCard: ICard = {
     ...card,
     id: Math.round(Math.random() * 100).toString(),
@@ -141,14 +127,11 @@ export const addCard = async (card: ICard): Promise<ICard> => {
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   };
-  console.log("database.ts: card for persisting to DB:", newCard);
 
   try {
     // add to MongoDB using mongoose
     const cardModel = new Card(newCard);
-    await cardModel.save().then((result) => {
-      console.log("Saved to MongoDB: ", result);
-    });
+    await cardModel.save().then((result) => {});
   } catch (error) {
     console.error("Error saving to MongoDB: ", error);
   }
@@ -164,7 +147,6 @@ export const updateCard = async (
       ...card,
       updatedAt: new Date().toISOString(),
     }).then((result) => {
-      console.log("Mongoose: updateCard", result);
       return result;
     });
     return updatedCard;
@@ -175,10 +157,8 @@ export const updateCard = async (
 };
 
 export const deleteCard = async (id: string): Promise<ICard | null> => {
-  console.log("Received id: ", id);
   try {
     const deletedCard = await Card.findByIdAndDelete(id).then((result) => {
-      console.log("Mongoose: deleteCard", result);
       return result;
     });
     return deletedCard;

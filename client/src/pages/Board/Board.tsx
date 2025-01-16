@@ -27,10 +27,6 @@ const Board = () => {
 
   const { data, error, isLoading } = useGetAllCardsQuery();
   const cards = data?.data.getAllCards ?? [];
-  console.log({
-    data,
-    cards,
-  });
 
   const [addCard] = useAddCardMutation();
   const [updateCard] = useUpdateCardMutation();
@@ -49,7 +45,6 @@ const Board = () => {
   };
 
   const onSubmit = (values: Record<string, string>) => {
-    console.log('Board: Child form submitted');
     let newCardStatus = CardStatus.TODO;
     if (typeOfCardOpenedForEditing === KanbanLaneTypes.inProgress) {
       newCardStatus = CardStatus.IN_PROGRESS;
@@ -63,7 +58,7 @@ const Board = () => {
         title: values.cardTitle,
         description: '',
         status: newCardStatus,
-        assignedTo: '1', // TODO: keep the original
+        assignedTo: '1',
       });
     } else {
       addCard({
@@ -93,7 +88,6 @@ const Board = () => {
   };
 
   const onCardDelete = async (id: string) => {
-    console.log('Delete card', id);
     const result = await deleteCard(id).unwrap();
   };
 

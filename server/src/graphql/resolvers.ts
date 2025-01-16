@@ -31,21 +31,16 @@ export const root = {
 
   addUser: (params: { user: IUser }) => {
     const { user } = params;
-    console.log("Received user", { user });
     const newUser = addUser(user);
-    console.log("New user", { newUser });
     return newUser;
   },
 
   updateUser: (params: { user: IUser }) => {
-    console.log("Received params", { params });
     const { user } = params;
-    console.log("Received user", { user });
     return updateUser(user.id || "", user);
   },
 
   deleteUser: (params: { id: string }) => {
-    console.log("Received params: ", params);
     const { id } = params;
     return deleteUser(id);
   },
@@ -63,21 +58,16 @@ export const root = {
 
   addCard: (params: { card: ICard }) => {
     const { card } = params;
-    console.log("Received card 1", { card });
     const newCard = addCard(card);
-    console.log("New card 1", { newCard });
     return newCard;
   },
 
   updateCard: (params: { card: ICard }) => {
-    console.log("Received params", { params });
     const { card } = params;
-    console.log("Received card", { card });
     return updateCard(card.id || "", card);
   },
 
   deleteCard: (params: { id: string }) => {
-    console.log("Received params: ", params);
     const { id } = params;
     return deleteCard(id);
   },

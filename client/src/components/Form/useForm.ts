@@ -14,7 +14,6 @@ function useForm(
   };
 
   const handleSubmit = (callback: () => void) => (event: React.FormEvent) => {
-    console.log('handleSubmit called');
     event.preventDefault();
     const validationErrors = validate(values);
     setErrors(validationErrors);
