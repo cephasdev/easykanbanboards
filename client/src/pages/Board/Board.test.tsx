@@ -34,7 +34,7 @@ describe('Board Component', () => {
         },
       },
       error: null,
-      isLoading: true,
+      isLoading: false,
     });
     (useAddCardMutation as jest.Mock).mockReturnValue([jest.fn()]);
     (useUpdateCardMutation as jest.Mock).mockReturnValue([jest.fn()]);
@@ -42,6 +42,20 @@ describe('Board Component', () => {
   });
 
   test('renders loading state initially', () => {
+    (useGetAllCardsQuery as jest.Mock).mockReturnValue({
+      data: {
+        data: {
+          getAllCards: [
+            { id: '1', title: 'Test Card 1', status: CardStatus.TODO },
+            { id: '2', title: 'Test Card 2', status: CardStatus.IN_PROGRESS },
+            { id: '3', title: 'Test Card 3', status: CardStatus.DONE },
+          ],
+        },
+      },
+      error: null,
+      isLoading: true,
+    });
+
     render(
       <ThemeProvider theme={theme}>
         <Board />

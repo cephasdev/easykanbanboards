@@ -2,7 +2,7 @@ import { CardStatus } from '../../entities/enumerations/CardStatus';
 import KanbanLaneTypes from '../../entities/enumerations/KanbanLaneTypes';
 import Card from '../../components/Card/Card';
 import KanbanLane from '../../components/KanbanLane/KanbanLane';
-import StyledBoard from './Board.styles';
+import StyledBoard, { LoadingText } from './Board.styles';
 import Modal from '../../components/Modal/Modal';
 import { useEffect, useState } from 'react';
 import CardForm from '../../components/Form/CardForm';
@@ -124,9 +124,16 @@ const Board = () => {
     }).unwrap();
   };
 
+  if (isLoading) {
+    return (
+      <LoadingText>
+        <div>Loading...</div>
+      </LoadingText>
+    );
+  }
+
   return (
     <DndContext onDragEnd={onDragEnd}>
-      {isLoading && <div>Loading...</div>}
       <StyledBoard>
         <KanbanLane
           title="To Do"
